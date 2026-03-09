@@ -1,0 +1,9 @@
+Комментарий: TT77TT77T
+……………………………………………………………
+To: XgHAGnaZNKz43GBkhhdnPvbKX69iHhc2RY
+Amount: 0.00001000 DASH ($1 / 0 AMD)
+Time: 2025-10-29 18:47:38
+DASH rate: $48.42 (binance)
+Sent by @BitcoinOperator
+……………………………………………………………
+Transaction: https://blockchair.com/dash/transaction/6a547eb8476d199c9c0eae762f31c910bfe2699d111b9903292d47810909fcc0

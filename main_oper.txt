@@ -1,0 +1,9 @@
+Комментарий: profftag
+……………………………………………………………
+To: XnLEpJ6KRmN5brH3QgUiX1nv8JWGmrEX2K
+Amount: 0.00001000 DASH ($1 / 0 AMD)
+Time: 2026-01-03 02:00:33
+DASH rate: $34.75 (binance)
+Sent by @BitcoinOperator
+……………………………………………………………
+Transaction: https://blockchair.com/dash/transaction/c6a2d343f6a7d7a531bfa812c4f1c2b3449b43bd2b2555bfd4a7a2f3a12017c4

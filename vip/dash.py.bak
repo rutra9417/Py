@@ -1,0 +1,238 @@
+import os
+import re
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    MessageHandler,
+    CallbackQueryHandler,
+    filters,
+    ContextTypes,
+)
+from telegram.constants import MessageOriginType
+
+# Конфигурация бота
+BOT_TOKEN = '6455033711:AAHrCXCg1XRgqroEfyZKGUq5_QGqW1czo68'
+ADDRESSES_FILE = 'addresses.txt'
+CHAT_IDS_FILE = 'chat_ids.txt'
+
+# Регулярное выражение для поиска Dash-адресов
+DASH_ADDRESS_REGEX = r'X[1-9A-HJ-NP-Za-km-z]{33}'
+
+# Состояния для обработки callback
+VIEW_ADDRESSES = 1
+DELETE_ADDRESS = 2
+
+def save_to_file(filename: str, data: str, check_duplicates: bool = True) -> None:
+    """Сохраняет данные в файл, проверяя на дубликаты"""
+    try:
+        print(f"Попытка записи в {filename}: {data}")
+        if not os.path.exists(filename):
+            with open(filename, 'w'):
+                print(f"Создан новый файл {filename}")
+        
+        if check_duplicates:
+            with open(filename, 'r') as f:
+                if data in f.read():
+                    print(f"Дубликат данных, пропускаем: {data}")
+                    return
+        
+        with open(filename, 'a') as f:
+            f.write(data + '\n')
+            print(f"Успешно записано в {filename}")
+            
+    except Exception as e:
+        print(f"Ошибка записи в {filename}: {str(e)}")
+
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик команды /start"""
+    try:
+        user = update.effective_user
+        chat_id = update.effective_chat.id
+        print(f"\n=== NEW USER ===\nID: {user.id}\nUsername: @{user.username}\nName: {user.full_name}\nChat ID: {chat_id}")
+        
+        save_to_file(CHAT_IDS_FILE, str(chat_id))
+        
+        keyboard = [
+            [InlineKeyboardButton("📋 Просмотреть адреса", callback_data='view_addresses')]
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        
+        await update.message.reply_text(
+            "Բարև 🙈 🙉 🙊\n"
+            "հաշիվը forward արա ինդզ: 💰 💰 💰\n"
+            "ՈՒ հենց մի բան լինի կիմանաս ⏳️⏳️⏳ Առաջինը ՉՏԱՍ 🛑 🛑 🛑\n\n"
+            "ԴԵ ՔԵԶ ՏԵՆԱՄ ԲՐԱԴՐ 😎",
+            reply_markup=reply_markup
+        )
+    except Exception as e:
+        print(f"Ошибка в /start: {str(e)}")
+
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик входящих сообщений"""
+    try:
+        if not update.message or not update.message.text:
+            print("Получено пустое сообщение")
+            return
+
+        # Отладочная информация
+        user = update.effective_user
+        chat_id = update.effective_chat.id
+        text = update.message.text
+        print(f"\n=== NEW MESSAGE ===\nFrom: @{user.username} (ID: {user.id})\nChat ID: {chat_id}\nText: {text[:50]}...")
+
+        # Проверка пересланного сообщения
+        if not update.message.forward_origin:
+            print("Сообщение не переслано!")
+            await update.message.reply_text("⚠️ Пожалуйста, перешлите сообщение с адресом!")
+            return
+
+        # Получаем информацию об отправителе
+        origin = update.message.forward_origin
+        username = ""
+        
+        if origin.type == MessageOriginType.USER:
+            sender = origin.sender_user
+            username = f"#{sender.username}" if sender.username else "#unknown_username"
+            print(f"Переслано от пользователя: @{sender.username or 'нет username'}")
+        else:
+            print(f"Переслано из {origin.type}, username не доступен")
+            username = "#forwarded_message"
+
+        # Поиск адресов
+        addresses = re.findall(DASH_ADDRESS_REGEX, text)
+        print(f"Найдено адресов: {len(addresses)}")
+        
+        if not addresses:
+            print("Dash-адреса не найдены")
+            await update.message.reply_text("❌ В сообщении не найден Dash-адрес!")
+            return
+
+        # Сохранение данных
+        save_to_file(CHAT_IDS_FILE, str(chat_id))
+        
+        for addr in addresses:
+            if username:
+                save_to_file(ADDRESSES_FILE, f"{addr}\t{username}")
+            else:
+                save_to_file(ADDRESSES_FILE, addr)
+
+        # Ответ пользователю
+        response = (
+            f"✅ Сохранено адресов: {len(addresses)}\n"
+            f"📌 Источник: {username}\n"
+            f"Пример: {addresses[0][:10]}..."
+        )
+        
+        keyboard = [
+            [InlineKeyboardButton("📋 Просмотреть адреса", callback_data='view_addresses')]
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        
+        await update.message.reply_text(response, reply_markup=reply_markup)
+
+    except Exception as e:
+        print(f"⛔ Ошибка: {str(e)}")
+        if update.message:
+            await update.message.reply_text("⚠️ Произошла ошибка при обработке!")
+
+async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Обработчик нажатий на кнопки"""
+    query = update.callback_query
+    await query.answer()
+    
+    if query.data == 'view_addresses':
+        await view_addresses(update, context)
+    elif query.data.startswith('delete_'):
+        address_id = int(query.data.split('_')[1])
+        await delete_address(update, context, address_id)
+    elif query.data == 'back_to_list':
+        await view_addresses(update, context)
+
+async def view_addresses(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Показывает список сохраненных адресов"""
+    try:
+        if not os.path.exists(ADDRESSES_FILE):
+            await update.callback_query.message.reply_text("📭 Список адресов пуст!")
+            return
+            
+        with open(ADDRESSES_FILE, 'r') as f:
+            addresses = f.readlines()
+        
+        if not addresses:
+            await update.callback_query.message.reply_text("📭 Список адресов пуст!")
+            return
+            
+        # Создаем клавиатуру с адресами для удаления
+        keyboard = []
+        for idx, line in enumerate(addresses[:50]):  # Ограничиваем 50 адресами
+            parts = line.strip().split('\t')
+            address = parts[0]
+            info = parts[1] if len(parts) > 1 else ""
+            display_text = f"{address[:10]}...{address[-5:]} {info}" if len(address) > 15 else address
+            keyboard.append([InlineKeyboardButton(
+                f"❌ {display_text}",
+                callback_data=f'delete_{idx}'
+            )])
+        
+        keyboard.append([InlineKeyboardButton("🔙 Назад", callback_data='back_to_list')])
+        
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        
+        await update.callback_query.message.reply_text(
+            f"📋 Всего адресов: {len(addresses)}\nВыберите адрес для удаления:",
+            reply_markup=reply_markup
+        )
+    except Exception as e:
+        print(f"Ошибка при просмотре адресов: {str(e)}")
+        await update.callback_query.message.reply_text("⚠️ Ошибка при загрузке адресов!")
+
+async def delete_address(update: Update, context: ContextTypes.DEFAULT_TYPE, address_id: int) -> None:
+    """Удаляет выбранный адрес"""
+    try:
+        with open(ADDRESSES_FILE, 'r') as f:
+            addresses = f.readlines()
+        
+        if address_id < 0 or address_id >= len(addresses):
+            await update.callback_query.message.reply_text("⚠️ Неверный ID адреса!")
+            return
+            
+        deleted_address = addresses.pop(address_id)
+        
+        with open(ADDRESSES_FILE, 'w') as f:
+            f.writelines(addresses)
+        
+        # Создаем клавиатуру для возврата
+        keyboard = [
+            [InlineKeyboardButton("🔙 Вернуться к списку", callback_data='back_to_list')]
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        
+        await update.callback_query.message.reply_text(
+            f"✅ Адрес удален:\n{deleted_address}",
+            reply_markup=reply_markup
+        )
+    except Exception as e:
+        print(f"Ошибка при удалении адреса: {str(e)}")
+        await update.callback_query.message.reply_text("⚠️ Ошибка при удалении адреса!")
+
+def main() -> None:
+    """Запуск бота"""
+    try:
+        print("=== BOT STARTING ===")
+        app = Application.builder().token(BOT_TOKEN).build()
+        
+        # Регистрация обработчиков
+        app.add_handler(CommandHandler("start", start))
+        app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
+        app.add_handler(CallbackQueryHandler(button_callback))
+        
+        print("Бот запущен и ожидает сообщений...")
+        app.run_polling()
+        
+    except Exception as e:
+        print(f"!!! FATAL ERROR !!!: {str(e)}")
+
+if __name__ == '__main__':
+    print("=== INITIALIZING ===")
+    main()

@@ -1,0 +1,8 @@
+telethon
+python-dotenv
+aiohttp
+python-telegram-bot
+pyTelegramBotAPI
+Pillow
+requests
+aiofiles

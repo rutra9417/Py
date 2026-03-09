@@ -1,0 +1,9 @@
+
+-----------------------------------------------
+To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+Amount: 18.43728366 DASH ($20 / 7820 AMD) 
+Time: 2023-09-17 05:56:47
+DASH rate: $1.08
+Sent by @BitcoinOperator
+-----------------------------------------------
+Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a

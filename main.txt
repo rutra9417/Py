@@ -1,0 +1,181 @@
+
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:48
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:49
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:50
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:51
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:52
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:53
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:54
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:55
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:56
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:57
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:46
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:45
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:44
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:43
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:42
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:41
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:40
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:39
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:38
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    
+    -----------------------------------------------
+    To: Xt7tsDtskuQz11bx9BCUA4FQJ57kGVx5xe
+    Amount: 18.43728366 DASH ($10 / 3910 AMD) 
+    Time: 2023-09-17 05:56:37
+    DASH rate: $0.54
+    Sent by @BitcoinOperator
+    -----------------------------------------------
+    Transaction: https://blockchair.com/dash/transaction/13d402fd06ec03f50ff76926f26f3d6aa54f35172196e3be8dd6ab71900dad0a
+    

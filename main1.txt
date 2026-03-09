@@ -1,0 +1,134 @@
+# -*- coding: utf-8 -*-
+# Exchange userbot (Telethon) — автоответчик с логикой обмена.
+# Полная версия с миграцией БД, кастомным форматом чека и фиксами schedule_ask_amount.
+
+import os
+import logging
+import re
+import time
+import random
+import sqlite3
+import json
+import threading
+import secrets
+import urllib.request
+import asyncio
+from datetime import datetime, timedelta, timezone
+from typing import Dict, Any, Optional, Tuple, List
+
+from telethon import TelegramClient, events, types, errors
+from telethon.tl.types import PeerUser
+
+# === .env loader (без внешних deps) ===
+def _load_env_file(fp: str = ".env"):
+    try:
+        with open(fp, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#") or "=" not in line:
+                    continue
+                k, v = line.split("=", 1)
+                k = k.strip()
+                v = v.strip().strip("'").strip('"')
+                if k and (k not in os.environ):
+                    os.environ[k] = v
+    except FileNotFoundError:
+        pass
+
+_load_env_file()
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+log = logging.getLogger("userbot")
+
+# === credentials / switches ===
+API_ID = int(os.getenv("API_ID", "0") or "0")
+API_HASH = os.getenv("API_HASH", "")
+SESSION_NAME = os.getenv("SESSION_NAME", "exchange_userbot")
+
+ADMIN_IDS = [int(x) for x in os.getenv("ADMIN_IDS", "").replace(",", " ").split() if x.strip().isdigit()]
+DB = "exchange.db"
+ADMIN_MAGIC = os.getenv("ADMIN_MAGIC", "op:desk")
+ALLOW_GROUPS = os.getenv("ALLOW_GROUPS", "false").lower() in ("1", "true", "yes", "on")
+
+# === defaults (configurable via admin) ===
+DEFAULTS = {
+    "usd_amd": 408.0,       # AMD per 1 USD
+    "dash_usd": 61.4,       # fallback для DASH
+    "fee_mult": 1.054,      # если правило не подошло
+    "fixed_amd": 100.0,     # фикс. комиссия
+    "tz_offset_hours": 4.0, # AMT = UTC+4
+    "tz_label": "AMT",
+}
+
+# === language packs ===
+LEX = {
+    "am": {
+        "greet": "Ողջույն 👋",
+        "ask_addr": "Ի՞նչ գործարք է հարկավոր 🌟",
+        "ask_amount": "💵 Որքա՞ն գումար եք ցանկանում փոխանակել",
+        "duplicate_receipt": "Նույն կտրոնն եք ուղարկել 🧾",
+        "after_receipt_1": "Հիմա ստուգենք…",
+        "after_receipt_2": "Ստացանք, հիմա կփոխանցենք ու կտրոնը կտրամադրենք…",
+        "final_sent_1": "Փոխանակումը կատարվեց ✅",
+        "final_sent_2": "Ամեն ինչ պատրաստ է, շնորհակալություն 🙂",
+        "commission_label": "փոխանցման վճար",
+        "sum_line": "{amt}դր⤵️",
+        "receipt_line": "📸 Կտրոնն անմիջապես ուղարկեք 🧾",
+        "apps_line": "📲 Փոխանցումները այս պահին ստանում ենք միայն հեռախոսի telcell-easy ծրագրերից",
+        "warn_term": "‼️ Տերմինալով մեզ փոխանցում տվյալ պահին չեք կարող կատարել",
+        "pm_line": "{icon} {label}: {value}",
+    },
+    "ru": {
+        "greet": "Привет 👋 Какая операция нужна?",
+        "ask_addr": "Какая операция нужна? 🌟",
+        "ask_amount": "💵 На какую сумму хотите пополнить?",
+        "duplicate_receipt": "Вы прислали тот же чек 🧾",
+        "after_receipt_1": "Секунду, проверяю…",
+        "after_receipt_2": "Получили, сейчас переведём и предоставим чек.",
+        "final_sent_1": "Перевод выполнен ✅",
+        "final_sent_2": "Готово, спасибо за ожидание 🙂",
+        "commission_label": "комиссия",
+        "sum_line": "{amt} AMD ⤵️",
+        "receipt_line": "📸 После оплаты отправьте фото/скрин чека 🧾",
+        "apps_line": "📲 Приём переводов сейчас только из приложений telcell-easy на телефоне",
+        "warn_term": "‼️ Через терминал перевести на нас сейчас нельзя",
+        "pm_line": "{icon} {label}: {value}",
+    }
+}
+
+# === Telethon client ===
+client = TelegramClient(SESSION_NAME, API_ID, API_HASH)
+
+# === SAFE SEND HELPERS ===
+async def safe_send_message(entity, text, parse_mode="html"):
+    try:
+        return await client.send_message(entity, text, parse_mode=parse_mode)
+    except errors.UserIsBlockedError:
+        log.warning("User blocked.")
+    except errors.InputUserDeactivatedError:
+        log.warning("User deactivated.")
+    except Exception:
+        log.exception("send_message error")
+    return None
+
+async def safe_send_file(entity, file, caption=None):
+    try:
+        return await client.send_file(entity, file=file, caption=caption)
+    except Exception:
+        log.exception("send_file error")
+    return None
+
+async def safe_typing(entity, seconds: float = None):
+    try:
+        async with client.action(entity, 'typing'):
+            if seconds:
+                await asyncio.sleep(seconds)
+    except Exception:
+        pass
+
+# === human-like delays ===
+def typing_delay():
+    time.sleep(random.ni.
+PLLYL) RU(.
+nc
+TETWONEE_(      tedho
