@@ -11,27 +11,39 @@ from telegram.ext import (
 )
 from telegram.constants import MessageOriginType
 
+# ==========================
+# Настройки
+# ==========================
 BOT_TOKEN = '6455033711:AAHrCXCg1XRgqroEfyZKGUq5_QGqW1czo68'
-ADDRESSES_FILE = 'addresses.txt'
-CHAT_IDS_FILE = 'chat_ids.txt'
-SHOPS_FILE = 'shops.txt'
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ADDRESSES_FILE = os.path.join(BASE_DIR, 'addresses.txt')
+CHAT_IDS_FILE = os.path.join(BASE_DIR, 'chat_ids.txt')
+SHOPS_FILE = os.path.join(BASE_DIR, 'shops.txt')
 DASH_ADDRESS_REGEX = r'X[1-9A-HJ-NP-Za-km-z]{33}'
 
+# Создаем файлы, если их нет
+for file in [ADDRESSES_FILE, CHAT_IDS_FILE, SHOPS_FILE]:
+    if not os.path.exists(file):
+        open(file, 'w').close()
+
+# ==========================
+# Функции работы с файлами
+# ==========================
 def save_to_file(filename: str, data: str, check_duplicates: bool = True) -> None:
     try:
-        if not os.path.exists(filename):
-            with open(filename, 'w'): pass
-
         if check_duplicates:
             with open(filename, 'r') as f:
                 if data in f.read():
                     return
-
         with open(filename, 'a') as f:
             f.write(data + '\n')
     except Exception as e:
         print(f"Ошибка записи в {filename}: {str(e)}")
 
+# ==========================
+# Обработчики команд
+# ==========================
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     try:
         user = update.effective_user
@@ -52,6 +64,9 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     except Exception as e:
         print(f"Ошибка в /start: {str(e)}")
 
+# ==========================
+# Основная обработка сообщений
+# ==========================
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     try:
         if not update.message or not update.message.text:
@@ -104,6 +119,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         print(f"Ошибка: {str(e)}")
         await update.message.reply_text("⚠️ Ошибка при обработке!")
 
+# ==========================
+# Сохранение адресов
+# ==========================
 async def process_addresses(update: Update, context: ContextTypes.DEFAULT_TYPE, addresses: list, username: str) -> None:
     chat_id = update.effective_chat.id
     save_to_file(CHAT_IDS_FILE, str(chat_id))
@@ -123,6 +141,9 @@ async def process_addresses(update: Update, context: ContextTypes.DEFAULT_TYPE, 
         reply_markup=reply_markup
     )
 
+# ==========================
+# Просмотр и редактирование адресов
+# ==========================
 async def handle_edit_tag(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     try:
         index = context.user_data.pop('edit_index', None)
@@ -209,11 +230,11 @@ async def view_addresses(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         print(f"Ошибка при просмотре адресов: {str(e)}")
         await update.callback_query.message.reply_text("⚠️ Ошибка при загрузке адресов!")
 
+# ==========================
+# Магазины
+# ==========================
 async def view_shops(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     try:
-        if not os.path.exists(SHOPS_FILE):
-            open(SHOPS_FILE, 'w').close()
-
         with open(SHOPS_FILE, 'r') as f:
             shops = f.readlines()
 
@@ -252,10 +273,6 @@ async def handle_edit_shop(update: Update, context: ContextTypes.DEFAULT_TYPE) -
         with open(SHOPS_FILE, 'r') as f:
             lines = f.readlines()
 
-        if index < 0 or index >= len(lines):
-            await update.message.reply_text("⚠️ Неверный ID")
-            return
-
         lines[index] = f"{new_shop}\n"
 
         with open(SHOPS_FILE, 'w') as f:
@@ -285,10 +302,6 @@ async def delete_shop(update: Update, context: ContextTypes.DEFAULT_TYPE, shop_i
         with open(SHOPS_FILE, 'r') as f:
             shops = f.readlines()
 
-        if shop_index < 0 or shop_index >= len(shops):
-            await update.callback_query.message.reply_text("⚠️ Неверный ID магазина!")
-            return
-
         deleted = shops.pop(shop_index)
 
         with open(SHOPS_FILE, 'w') as f:
@@ -299,6 +312,9 @@ async def delete_shop(update: Update, context: ContextTypes.DEFAULT_TYPE, shop_i
         print(f"Ошибка удаления магазина: {str(e)}")
         await update.callback_query.message.reply_text("⚠️ Ошибка при удалении!")
 
+# ==========================
+# Ручной ввод адреса
+# ==========================
 async def start_manual_input(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     context.user_data['awaiting_manual_input'] = True
     await update.callback_query.message.reply_text(
@@ -328,6 +344,9 @@ async def handle_manual_input(update: Update, context: ContextTypes.DEFAULT_TYPE
         print(f"Ошибка ручного ввода: {str(e)}")
         await update.message.reply_text("⚠️ Ошибка при обработке ручного ввода!")
 
+# ==========================
+# Кнопки
+# ==========================
 async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     query = update.callback_query
     await query.answer()
@@ -360,6 +379,9 @@ async def button_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         await query.message.reply_text("❌ Ввод отменён.")
         await start(update, context)
 
+# ==========================
+# Запуск бота
+# ==========================
 def main() -> None:
     try:
         app = Application.builder().token(BOT_TOKEN).build()
